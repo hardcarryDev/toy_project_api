@@ -7,18 +7,21 @@ dotenv.config();
 // const DUMMY_PATH = process.env.DUMMY_PATH || './dummy';
 import typia from 'typia';
 
-import IFood from '../structures/IFood';
-const createRandomFood = typia.createRandom<IFood>();
-const food = createRandomFood();
-console.log(food);
+import IEatingList from '../structures/IEatingList';
+const createRandomList = typia.createRandom<IEatingList>();
+const API_LIST_CNT = 10;
 
 class FatSecretService extends BaseService {
   constructor(req: Request) {
     super(req);
   }
-  list = async () => {
+  list = () => {
     // const result = await readFile(path.join(DUMMY_PATH, '/fatSecret.json'), 'utf-8');
-    // return result;
+    const result = [];
+    for (let i = 0; i < API_LIST_CNT; i++) {
+      result.push(createRandomList());
+    }
+    return result;
   };
 }
 

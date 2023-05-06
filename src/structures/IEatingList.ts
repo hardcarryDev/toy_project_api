@@ -1,5 +1,15 @@
-export default interface IFood {
-  name: '치킨' | '피자' | '햄버거' | '스테이크';
+export default interface IEatingList {
+  /**
+   * @format date
+   */
+  date: string;
+  breakfast: IFood;
+  lunch: IFood;
+  dinner: IFood;
+}
+
+interface IFood {
+  name: '치킨' | '피자' | '햄버거' | '스테이크' | '샐러드';
 
   /**
    * @type int
@@ -16,10 +26,11 @@ export default interface IFood {
    * @maximum 100
    */
   quantity: number;
+
   /**
    * @type int
    * @minimum 1
    * @maximum 500
-   */ 
-  calorie: number; 
+   */
+  calorie: number;
 }
