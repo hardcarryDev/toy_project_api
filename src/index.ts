@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -11,6 +11,28 @@ class Bundle {
     this.app = express();
     this.host = process.env.HOST || 'http://localhost';
     this.port = process.env.PORT || '3000';
+    this.handlers();
+  }
+
+  private handlers(): void {
+    this.app.use((_: Request, res: Response) => {
+      console.error(res || '404');
+      res.status(404).send({
+        message: '404 error',
+        result: false,
+        code: 404,
+      });
+    });
+    this.app.use((err: Error, _: Request, res: Response) => {
+      if (err) {
+        console.error(err.message || err);
+        res.status(500).send({
+          message: err.message,
+          result: false,
+          code: 500,
+        });
+      }
+    });
   }
 }
 
