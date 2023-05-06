@@ -1,4 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
+import testRoutes from './routes/TestRoutes';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -11,7 +12,12 @@ class Bundle {
     this.app = express();
     this.host = process.env.HOST || 'http://localhost';
     this.port = process.env.PORT || '3000';
+    this.routes();
     this.handlers();
+  }
+
+  private routes(): void {
+    this.app.use('', testRoutes);
   }
 
   private handlers(): void {
@@ -39,9 +45,9 @@ class Bundle {
 const bundle = new Bundle();
 const app = bundle.app;
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World');
-});
+// app.get('/', (req: Request, res: Response) => {
+//   res.send('Hello World');
+// });
 
 app.listen(bundle.port, () => {
   console.log(`THIS APP IS RUNNING ==> ${bundle.host}:${bundle.port}`);
