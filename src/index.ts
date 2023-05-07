@@ -1,6 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import testRoutes from './routes/TestRoutes';
 import fatSecretRoutes from './routes/FatSecretRoutes';
+import { conn } from './config/DataBaseConnect';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -8,11 +9,18 @@ class Bundle {
   public app: Application;
   public host: string;
   public port: string;
+  public db: string;
+  public environment: string;
+  public connection: any;
 
   constructor() {
     this.app = express();
     this.host = process.env.HOST || 'http://localhost';
     this.port = process.env.PORT || '3000';
+    this.db = process.env.DB_HOST || '';
+    this.environment = process.env.NODE_ENV || 'dev';
+
+    conn.connect();
     this.routes();
     this.handlers();
   }
@@ -52,5 +60,7 @@ const app = bundle.app;
 // });
 
 app.listen(bundle.port, () => {
-  console.log(`THIS APP IS RUNNING ==> ${bundle.host}:${bundle.port}`);
+  console.log(`* APP RUNNING : ${bundle.host}:${bundle.port}`);
+  console.log(`* ENVIRONMENT : ${bundle.environment}`);
+  console.log(`* DB HOST     : ${bundle.db}`);
 });
