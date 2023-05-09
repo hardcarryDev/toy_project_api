@@ -18,6 +18,23 @@ class FatSecretController {
       }
     }
   };
+
+  userList = (req: Request, res: Response) => {
+    const svc: FatSecretService = new FatSecretService(req);
+    try {
+      const result = svc.userList();
+      res.send(successResponse(result));
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        res.send({
+          code: 500,
+          result: false,
+          message: error.message,
+        });
+      }
+    }
+  };
 }
 
 export default new FatSecretController();
