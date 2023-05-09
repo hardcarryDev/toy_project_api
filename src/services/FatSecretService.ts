@@ -30,7 +30,6 @@ class FatSecretService extends BaseService {
       console.log(`query1: ${query1}`);
 
       const records1 = await sequelize.query(query1);
-      console.log(`results: `, records1[0]);
       return records1[0];
     } catch (error) {
       if (error instanceof Error) {

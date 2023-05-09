@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import FatSecretService from '../services/FatSecretService';
-import { successResponse } from '../utils/makeResponse';
+import { successResponse, errorResponse } from '../utils/makeResponse';
 class FatSecretController {
   list = (req: Request, res: Response) => {
     const svc: FatSecretService = new FatSecretService(req);
@@ -8,13 +8,8 @@ class FatSecretController {
       const result = svc.list();
       res.send(successResponse(result));
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) {
-        res.send({
-          code: 500,
-          result: false,
-          message: error.message,
-        });
+        res.send(errorResponse(error));
       }
     }
   };
@@ -25,13 +20,8 @@ class FatSecretController {
       const result = await svc.userList();
       res.send(successResponse(result));
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) {
-        res.send({
-          code: 500,
-          result: false,
-          message: error.message,
-        });
+        res.send(errorResponse(error));
       }
     }
   };
