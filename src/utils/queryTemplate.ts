@@ -24,7 +24,8 @@ class QUERY_BUILDER {
     } else {
       keys = '*';
     }
-    const query = `SELECET ${keys} FROM ${tbName}`;
+    const query = `SELECT ${keys} FROM ${tbName}`;
+    console.log(`===BUILD QUERY ===\n${query}`);
     return query;
   }
 
@@ -46,6 +47,7 @@ class QUERY_BUILDER {
     const part1 = `INSERT INTO ${tbName} (${tableKeys})`;
     const part2 = `VALUES (${tableValues})`;
     const query = `${part1} ${part2}`;
+    console.log(`===BUILD QUERY ===\n${query}`);
     return query;
   }
 }
