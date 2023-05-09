@@ -1,6 +1,4 @@
-function successResponse(data: any) {
-  console.log('data: ', data);
-
+function successResponse(data: { [key: string]: any }) {
   return {
     message: 'success',
     result: true,

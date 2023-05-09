@@ -1,12 +1,10 @@
 import { Request } from 'express';
 import BaseService from './BaseService';
-import { readFile } from 'fs/promises';
-import * as path from 'path';
-import DB from '../config/DataBase';
+import { db, sequelize } from '../config/DataBase';
+
 import QUERY_BUILDER from '../utils/queryTemplate';
 import dotenv from 'dotenv';
 dotenv.config();
-// const DUMMY_PATH = process.env.DUMMY_PATH || './dummy';
 import typia from 'typia';
 
 import IEatingList from '../structures/IEatingList';
@@ -26,14 +24,19 @@ class FatSecretService extends BaseService {
     return result;
   }
 
-  userList() {
-    // let result = [];
-    // const promisePool: any = DB.conn.promise();
-    // const [rows, fields] = await promisePool.query('SELECT * FROM user');
-    // console.log(rows);
+  async userList() {
+    try {
+      const query1 = QUERY_BUILDER.SIMPLE_SELECT('user1');
+      console.log(`query1: ${query1}`);
 
-    // const result = conn.query(QUERY_BUILDER.SIMPLE_SELECT('user'));
-    throw new Error('대기 ');
+      const records1 = await sequelize.query(query1);
+      console.log(`results: `, records1[0]);
+      return records1[0];
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      }
+    }
   }
 }
 

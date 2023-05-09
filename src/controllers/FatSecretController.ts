@@ -19,10 +19,10 @@ class FatSecretController {
     }
   };
 
-  userList = (req: Request, res: Response) => {
+  userList = async (req: Request, res: Response) => {
     const svc: FatSecretService = new FatSecretService(req);
     try {
-      const result = svc.userList();
+      const result = await svc.userList();
       res.send(successResponse(result));
     } catch (error) {
       console.log(error);
