@@ -2,7 +2,7 @@ import { Request } from 'express';
 import BaseService from './BaseService';
 import { readFile } from 'fs/promises';
 import * as path from 'path';
-import { conn } from '../config/DataBaseConnect';
+import DB from '../config/DataBase';
 import QUERY_BUILDER from '../utils/queryTemplate';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -26,14 +26,14 @@ class FatSecretService extends BaseService {
     return result;
   }
 
-  async userList() {
-    let result = [];
-    let t = await conn.query('SELECT * FROM user');
-    console.log(t);
-    console.log(t.results);
+  userList() {
+    // let result = [];
+    // const promisePool: any = DB.conn.promise();
+    // const [rows, fields] = await promisePool.query('SELECT * FROM user');
+    // console.log(rows);
 
     // const result = conn.query(QUERY_BUILDER.SIMPLE_SELECT('user'));
-    return result;
+    throw new Error('대기 ');
   }
 }
 
