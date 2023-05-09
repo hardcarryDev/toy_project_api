@@ -1,4 +1,4 @@
-function successResponse(data: { [key: string]: any }) {
+function successResponse(data: unknown[] | unknown) {
   return {
     message: 'success',
     result: true,
