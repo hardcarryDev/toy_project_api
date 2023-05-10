@@ -28,7 +28,7 @@ class QUERY_BUILDER {
       cols = '*';
     }
     let conditions = 'WHERE 1=1 ';
-    if (!_.isEmpty(where)) {
+    if (!_.isEmpty(<object>where)) {
       for (const key in where) {
         let value = where[key];
         if (typeof value == 'string') value = `'${value}'`;
