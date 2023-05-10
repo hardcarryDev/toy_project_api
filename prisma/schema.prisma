@@ -9,22 +9,26 @@ datasource db {
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model test {
-  id          Int     @id @default(autoincrement()) @db.UnsignedInt
-  test_id     String  @db.VarChar(20)
+  id          Int     @id @default(autoincrement())
   title       String? @db.VarChar(20)
   description String? @db.VarChar(20)
   etc1        String? @db.VarChar(20)
   etc2        String? @db.VarChar(20)
   etc3        String? @db.VarChar(20)
+  user_id     Int?
+  user        user?   @relation(fields: [user_id], references: [id], onUpdate: SetNull, map: "test_FK")
+
+  @@index([user_id], map: "test_FK")
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
 model user {
-  id            Int       @id @default(autoincrement()) @db.UnsignedInt
+  id            Int       @id @default(autoincrement())
   user_id       String    @db.VarChar(20)
   user_password String    @db.VarChar(20)
-  age           Int?      @db.UnsignedInt
+  age           Int?
   sex           user_sex?
+  test          test[]
 }
 
 enum user_sex {

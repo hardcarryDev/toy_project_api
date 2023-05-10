@@ -1,8 +1,11 @@
 import { Request } from 'express';
 import BaseService from './BaseService';
 import { db, sequelize } from '../config/DataBase';
-
 import QUERY_BUILDER from '../utils/queryTemplate';
+
+import { PrismaClient, Prisma, user } from '@prisma/client';
+const prisma = new PrismaClient();
+
 import dotenv from 'dotenv';
 dotenv.config();
 import typia from 'typia';
@@ -25,11 +28,15 @@ class FatSecretService extends BaseService {
 
   async userList() {
     try {
-      const query1 = QUERY_BUILDER.SIMPLE_SELECT('user', [], { user_id: 'test2' });
-      console.log(`query1: ${query1}`);
+      // const query1 = QUERY_BUILDER.SIMPLE_SELECT('user', [], { user_id: 'test2' });
+      // console.log(`query1: ${query1}`);
+      // const records1 = await sequelize.query(query1);
+      // return records1[0];
+      // const allUsers = await prisma.user.findMany();
+      // return allUsers;
 
-      const records1 = await sequelize.query(query1);
-      return records1[0];
+      const result = await prisma.$queryRaw<user[]>`SELECT * FROM User`;
+      return result;
     } catch (error) {
       if (error instanceof Error) {
         throw error;
