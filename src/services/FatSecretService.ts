@@ -26,7 +26,7 @@ class FatSecretService extends BaseService {
 
   async userList() {
     try {
-      const query1 = QUERY_BUILDER.SIMPLE_SELECT('user1');
+      const query1 = QUERY_BUILDER.SIMPLE_SELECT('user', [], { user_id: 'test2' });
       console.log(`query1: ${query1}`);
 
       const records1 = await sequelize.query(query1);

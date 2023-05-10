@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 /**
  * 사용 예시)
  *
@@ -16,14 +18,23 @@ class QUERY_BUILDER {
    * @param columns 조회할 컬럼
    * @returns 완성된 쿼리문
    */
-  static SIMPLE_SELECT(tbName: string, columns: string[] = []) {
-    let keys = '';
+  static SIMPLE_SELECT(tbName: string, columns: string[] = [], where: { [key: string]: string | number } = {}) {
+    let cols = '';
     if (columns.length > 0 && columns[0] != '*') {
-      columns.forEach((val, _) => (keys += `${val}, `));
+      columns.forEach((val, _) => (cols += `${val}, `));
     } else {
-      keys = '*';
+      cols = '*';
     }
-    const query = `SELECT ${keys} FROM ${tbName}`;
+    let conditions = 'WHERE 1=1 ';
+    if (!_.isEmpty(where)) {
+      for (const key in where) {
+        let value = where[key];
+        if (typeof value == 'string') value = `'${value}'`;
+        conditions += `AND ${key} = ${value}`;
+      }
+    }
+
+    const query = `SELECT ${cols} FROM ${tbName} ${conditions}`;
     console.log(`===BUILD QUERY ===\n${query}`);
     return query;
   }
