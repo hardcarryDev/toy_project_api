@@ -7,6 +7,8 @@ import * as _ from 'lodash';
  *
  * QUERY_BUILDER.SELECT("user", ['user_name', 'email'])
  *
+ * QUERY_BUILDER.SIMPLE_SELECT('user', [], { user_id: 'test2' });
+ *
  * QUERY_BUILDER.INSERT("user", {name: "Sam", tel: 09090909, email: "address@domain.com"})
  *
  */

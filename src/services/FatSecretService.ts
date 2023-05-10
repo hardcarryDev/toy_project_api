@@ -16,7 +16,6 @@ class FatSecretService extends BaseService {
     super(req);
   }
   list() {
-    // const result = await readFile(path.join(DUMMY_PATH, '/fatSecret.json'), 'utf-8');
     const result = [];
     for (let i = 0; i < API_LIST_CNT; i++) {
       result.push(createRandomList());
