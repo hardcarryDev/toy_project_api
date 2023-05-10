@@ -17,7 +17,6 @@ class QUERY_BUILDER {
    * @returns 완성된 쿼리문
    */
   static SIMPLE_SELECT(tbName: string, columns: string[] = []) {
-    // throw new Error('아직 덜 만듬');
     let keys = '';
     if (columns.length > 0 && columns[0] != '*') {
       columns.forEach((val, _) => (keys += `${val}, `));
