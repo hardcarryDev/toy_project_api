@@ -99,5 +99,5 @@
     "strictNullChecks": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "public", "dist"]
+  "exclude": ["node_modules", "public", "dist", "prisma_sample.ts"]
 }
