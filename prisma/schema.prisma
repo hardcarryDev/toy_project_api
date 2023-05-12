@@ -7,47 +7,78 @@ datasource db {
   url      = env("PRISMA_DB_URL")
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model user {
-  id            Int       @id @default(autoincrement())
-  user_id       String    @db.VarChar(20)
-  user_password String    @db.VarChar(20)
-  age           Int?
-  sex           user_sex?
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @db.DateTime(0)
-  posts         posts[]
+model member {
+  id         Unsupported("uuid")  @id @default(dbgenerated("(uuid())"))
+  user_id    String               @db.VarChar(50)
+  password   String               @db.VarChar(50)
+  name       String?              @db.VarChar(100)
+  gender     member_gender?
+  age        Int?                 @db.TinyInt
+  email      String?              @db.VarChar(50)
+  phone      String?              @db.VarChar(50)
+  grade      String?              @db.VarChar(20)
+  grade_id   Unsupported("uuid")?
+  create_dt  DateTime             @default(now()) @db.DateTime(0)
+  update_dt  DateTime?            @db.DateTime(0)
+  exit_dt    DateTime?            @db.DateTime(0)
+  order      order[]
+  product_io product_io[]
+
+  @@ignore
 }
 
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model comments {
-  id         Int      @id @default(autoincrement())
-  post_id    Int?
-  user_id    Int?
-  body       String   @db.Text
-  like       Int      @default(0)
-  created_at DateTime @default(now())
-  updated_at DateTime @db.DateTime(0)
-  posts      posts?   @relation(fields: [post_id], references: [id], onUpdate: SetNull, map: "comments_FK")
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model order {
+  id              Unsupported("uuid") @id @default(dbgenerated("(uuid())"))
+  member_id       Unsupported("uuid")
+  req_name        String?             @db.VarChar(20)
+  res_address     String?             @db.VarChar(100)
+  res_phone       String?             @db.VarChar(20)
+  res_requirement String?             @db.VarChar(100)
+  total_price     Int?
+  order_dt        DateTime?           @default(now()) @db.DateTime(0)
+  order_cancel_dt DateTime?           @db.DateTime(0)
+  member          member              @relation(fields: [member_id], references: [id], onUpdate: Restrict, map: "FK_member_TO_order_1")
+  product_io      product_io[]
 
-  @@index([post_id], map: "comments_FK")
+  @@index([member_id], map: "FK_member_TO_order_1")
+  @@ignore
 }
 
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model posts {
-  id         Int        @id @default(autoincrement())
-  title      String     @db.VarChar(255)
-  body       String     @db.Text
-  user_id    Int?
-  created_at DateTime   @default(now())
-  updated_at DateTime   @db.DateTime(0)
-  comments   comments[]
-  user       user?      @relation(fields: [user_id], references: [id], onUpdate: SetNull, map: "posts_FK")
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model product {
+  id          Unsupported("uuid") @id @default(dbgenerated("(uuid())"))
+  name        String?             @default("NORMAL") @db.VarChar(50)
+  price       Int?
+  pcategory   String?             @db.VarChar(20)
+  description String?             @default("NORMAL") @db.VarChar(50)
+  pcompany    String?             @db.VarChar(20)
+  product_io  product_io[]
 
-  @@index([user_id], map: "posts_FK")
+  @@ignore
 }
 
-enum user_sex {
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+model product_io {
+  id         Unsupported("uuid") @default(dbgenerated("(uuid())"))
+  prodcut_id Unsupported("uuid")
+  order_id   Unsupported("uuid")
+  member_id  Unsupported("uuid")
+  status     String?             @db.VarChar(10)
+  member     member              @relation(fields: [member_id], references: [id], onUpdate: Restrict, map: "FK_member_TO_product_io_1")
+  order      order               @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_order_TO_product_io_1")
+  product    product             @relation(fields: [prodcut_id], references: [id], onUpdate: Restrict, map: "FK_product_TO_product_io_1")
+
+  @@id([id, prodcut_id, order_id])
+  @@index([member_id], map: "FK_member_TO_product_io_1")
+  @@index([order_id], map: "FK_order_TO_product_io_1")
+  @@index([prodcut_id], map: "FK_product_TO_product_io_1")
+  @@ignore
+}
+
+enum member_gender {
   M
   W
 }
