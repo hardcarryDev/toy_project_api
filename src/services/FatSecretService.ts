@@ -2,7 +2,7 @@ import { Request } from 'express';
 import BaseService from './BaseService';
 import QUERY_BUILDER from '../utils/queryTemplate';
 
-import { PrismaClient, member, memberCreateInput } from '@prisma/client';
+import { Prisma, PrismaClient, member } from '@prisma/client';
 const prisma = new PrismaClient();
 
 import dotenv from 'dotenv';
@@ -26,13 +26,19 @@ class FatSecretService extends BaseService {
   }
 
   async memberList() {
-    const query1 = QUERY_BUILDER.SIMPLE_SELECT('member1', [], { user_id: 'test2' });
-    const result = await prisma.$queryRawUnsafe<member[]>(query1);
+    // const query1 = QUERY_BUILDER.SIMPLE_SELECT('member1', [], { user_id: 'test2' });
+    // const result = await prisma.$queryRawUnsafe<member[]>(query1);
+    // return result;
+    typia.assert<Prisma.memberWhereInput>(this.body);
+
+    const result = await prisma.member.findMany({
+      where: <Prisma.memberWhereInput>this.body,
+    });
     return result;
   }
 
   async createMember() {
-    typia.assert<memberCreateInput>(this.body);
+    typia.assert<memberCreateMustInput>(this.body);
 
     // {
     //   user_id: 'test_user1',
