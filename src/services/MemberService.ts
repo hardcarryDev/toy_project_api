@@ -3,10 +3,8 @@ import BaseService from './BaseService';
 import { Prisma, PrismaClient, member } from '@prisma/client';
 const prisma = new PrismaClient();
 import typia from 'typia';
-
 import dotenv from 'dotenv';
 dotenv.config();
-
 class MemberService extends BaseService {
   constructor(req: Request) {
     super(req);
