@@ -2,7 +2,7 @@ import { Request } from 'express';
 import BaseService from './BaseService';
 import QUERY_BUILDER from '../utils/queryTemplate';
 
-import { PrismaClient, member } from '@prisma/client';
+import { PrismaClient, member, memberCreateInput } from '@prisma/client';
 const prisma = new PrismaClient();
 
 import dotenv from 'dotenv';
@@ -17,7 +17,7 @@ class FatSecretService extends BaseService {
   constructor(req: Request) {
     super(req);
   }
-  list() {
+  test() {
     const result = [];
     for (let i = 0; i < API_LIST_CNT; i++) {
       result.push(createRandomList());
@@ -25,16 +25,27 @@ class FatSecretService extends BaseService {
     return result;
   }
 
-  async userList() {
-    try {
-      const query1 = QUERY_BUILDER.SIMPLE_SELECT('member', [], { user_id: 'test2' });
-      const result = await prisma.$queryRawUnsafe<member[]>(query1);
-      return result;
-    } catch (error) {
-      if (error instanceof Error) {
-        throw error;
-      }
-    }
+  async memberList() {
+    const query1 = QUERY_BUILDER.SIMPLE_SELECT('member1', [], { user_id: 'test2' });
+    const result = await prisma.$queryRawUnsafe<member[]>(query1);
+    return result;
+  }
+
+  async createMember() {
+    typia.assert<memberCreateInput>(this.body);
+
+    // {
+    //   user_id: 'test_user1',
+    //   password: 'test_user1',
+    //   name: '테스트 유저',
+    //   gender: 'M',
+    //   age: 30,
+    //   email: 'test@gmail.com',
+    //   phone: '010-1111-2222',
+    // };
+    const query1 = QUERY_BUILDER.INSERT<Request['body']>('member', this.body);
+    const result = await prisma.$queryRawUnsafe(query1);
+    return result;
   }
 }
 
