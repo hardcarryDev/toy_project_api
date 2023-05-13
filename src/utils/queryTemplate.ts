@@ -47,7 +47,7 @@ class QUERY_BUILDER {
    * @param data 추가할 항목
    * @returns 완성된 쿼리문
    */
-  static INSERT(tbName: string, data: { [key: string]: string | number }) {
+  static INSERT<T extends { [key: string]: string | number }>(tbName: string, data: T) {
     let tableKeys = '';
     let tableValues = '';
     for (const key in data) {
