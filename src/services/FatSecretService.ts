@@ -2,7 +2,7 @@ import { Request } from 'express';
 import BaseService from './BaseService';
 import QUERY_BUILDER from '../utils/queryTemplate';
 
-import { PrismaClient, Prisma, user } from '@prisma/client';
+import { PrismaClient, member } from '@prisma/client';
 const prisma = new PrismaClient();
 
 import dotenv from 'dotenv';
@@ -27,8 +27,8 @@ class FatSecretService extends BaseService {
 
   async userList() {
     try {
-      const query1 = QUERY_BUILDER.SIMPLE_SELECT('user', [], { user_id: 'test2' });
-      const result = await prisma.$queryRawUnsafe<user[]>(query1);
+      const query1 = QUERY_BUILDER.SIMPLE_SELECT('member', [], { user_id: 'test2' });
+      const result = await prisma.$queryRawUnsafe<member[]>(query1);
       return result;
     } catch (error) {
       if (error instanceof Error) {
