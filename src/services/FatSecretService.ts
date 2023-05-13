@@ -30,7 +30,6 @@ class FatSecretService extends BaseService {
     // const result = await prisma.$queryRawUnsafe<member[]>(query1);
     // return result;
     typia.assert<Prisma.memberWhereInput>(this.body);
-
     const result = await prisma.member.findMany({
       where: <Prisma.memberWhereInput>this.body,
     });
@@ -39,19 +38,10 @@ class FatSecretService extends BaseService {
 
   async createMember() {
     typia.assert<memberCreateMustInput>(this.body);
-
-    // {
-    //   user_id: 'test_user1',
-    //   password: 'test_user1',
-    //   name: '테스트 유저',
-    //   gender: 'M',
-    //   age: 30,
-    //   email: 'test@gmail.com',
-    //   phone: '010-1111-2222',
-    // };
-    const query1 = QUERY_BUILDER.INSERT<Request['body']>('member', this.body);
-    const result = await prisma.$queryRawUnsafe(query1);
-    return result;
+    const member = await prisma.member.create({
+      data: <Prisma.memberCreateInput>this.body,
+    });
+    return member;
   }
 }
 
