@@ -1,6 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
-import testRoutes from './routes/TestRoutes';
-import fatSecretRoutes from './routes/FatSecretRoutes';
+import MemberRoutes from './routes/MemberRoutes';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -29,8 +28,7 @@ class Bundle {
   }
 
   private routes(): void {
-    this.app.use('', testRoutes);
-    this.app.use('/fat', fatSecretRoutes);
+    this.app.use('/member', MemberRoutes);
   }
 
   private handlers(): void {
