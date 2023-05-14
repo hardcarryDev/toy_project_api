@@ -10,7 +10,7 @@ class OrderService extends BaseService {
   }
 
   async createOrder() {
-    typia.assert<orderCreateMustInput>(this.body);
+    typia.assertEquals<orderCreateMustInput>(this.body);
     const order = await prisma.order.create({
       data: <Prisma.orderCreateInput>this.body,
     });

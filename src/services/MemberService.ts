@@ -10,7 +10,7 @@ class MemberService extends BaseService {
   }
 
   async createMember() {
-    typia.assert<memberCreateMustInput>(this.body);
+    typia.assertEquals<memberCreateMustInput>(this.body);
     const member = await prisma.member.create({
       data: <Prisma.memberCreateInput>this.body,
     });
@@ -18,7 +18,7 @@ class MemberService extends BaseService {
   }
 
   async memberList() {
-    typia.assert<Prisma.memberWhereInput>(this.body);
+    typia.assertEquals<Prisma.memberWhereInput>(this.body);
     const result = await prisma.member.findMany({
       where: <Prisma.memberWhereInput>this.body,
     });
