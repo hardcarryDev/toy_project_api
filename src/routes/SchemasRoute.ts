@@ -1,9 +1,9 @@
 import BaseRoutes from './BaseRouter';
 import SchemaController from '../controllers/SchemaController';
-
 import typia from 'typia';
+// [types/dto/**/*] 에 있는 커스텀 타입을 스키마에 등록해서 다른 개발자들과 공유하기 편하게 처리하자.
+// 주로 create 또는 update 관련 API에 전달될 파라미터에 필수값이 필요한 경우 타입을 지정하고 알려주면 됨.
 const ajv = typia.application<[memberCreateMustInput, memberCreateMustInput2, memberCreateMustInput3], 'ajv'>();
-// console.log(ajv.components.schemas);
 
 class SchemasRoute extends BaseRoutes {
   public routes(): void {
