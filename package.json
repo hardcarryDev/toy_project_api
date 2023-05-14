@@ -1,7 +1,7 @@
 {
-  "name": "sample_project",
+  "name": "TOY_PROJECT_API",
   "version": "1.0.0",
-  "description": "",
+  "description": "express typescript backend server using prisma & mariadb",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
     "prepare": "ts-patch install"
   },
   "keywords": [],
-  "author": "",
+  "author": "cordelia(JINWOO)",
   "license": "ISC",
   "devDependencies": {
     "@types/express": "^4.17.17",
