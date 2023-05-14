@@ -1,3 +1,5 @@
+import { TypeGuardError } from 'typia';
+
 function successResponse(data: unknown[] | unknown) {
   return {
     message: 'success',
@@ -17,13 +19,36 @@ function successResponse(data: unknown[] | unknown) {
  * @returns ERROR JSON
  */
 function errorResponse(error: Error) {
-  console.log(error);
-  const msg = error.name === 'SequelizeDatabaseError' ? '내부 서버 에러입니다. 관리자에게 문의해주세요' : error.message;
+  console.log('====== error.name ====== :: ', error.name);
+
+  const errInfo: { [key: string]: string } = {
+    PrismaClientValidationError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
+    TypeGuardError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
+    SequelizeDatabaseError: '내부 서버 에러입니다. 관리자에게 문의해주세요',
+  };
+
+  const msg: string = errInfo[error.name];
+
   return {
     code: 500,
     result: false,
     message: msg,
+    error: error.message,
   };
 }
 
-export { successResponse, errorResponse };
+function makeExactError(error: unknown): unknown {
+  if (error instanceof TypeGuardError) {
+    error.name = 'TypeGuardError';
+    return error;
+  }
+  if (error instanceof SyntaxError) {
+    error.name = 'SyntaxError';
+    return error;
+  }
+  if (error instanceof Error) {
+    return error;
+  }
+}
+
+export { successResponse, errorResponse, makeExactError };
