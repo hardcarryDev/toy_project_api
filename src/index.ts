@@ -1,6 +1,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
-import MemberRoutes from './routes/MemberRoutes';
 import SchemasRoute from './routes/SchemasRoute';
+import MemberRoutes from './routes/MemberRoutes';
+import OrderRoutes from './routes/OrderRoutes';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -29,8 +30,9 @@ class Bundle {
   }
 
   private routes(): void {
-    this.app.use('/schemas', SchemasRoute);
+    this.app.use('/components/schemas', SchemasRoute);
     this.app.use('/member', MemberRoutes);
+    this.app.use('/order', OrderRoutes);
   }
 
   private handlers(): void {

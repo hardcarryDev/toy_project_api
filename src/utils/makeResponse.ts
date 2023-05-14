@@ -1,4 +1,4 @@
-import { TypeGuardError } from 'typia';
+import typia from 'typia';
 import { Prisma } from '@prisma/client';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -49,7 +49,7 @@ function makeExactError(error: unknown): unknown {
     error.name = 'PrismaClientValidationError';
   }
 
-  if (error instanceof TypeGuardError) {
+  if (error instanceof typia.TypeGuardError) {
     error.name = 'TypeGuardError';
   }
 
