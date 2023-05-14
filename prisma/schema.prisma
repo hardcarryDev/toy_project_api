@@ -80,11 +80,11 @@ model cart {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model order_detail {
-  id         String @default(dbgenerated("(uuid())"))
-  order_id   String
-  product_id String
-  order_dt   DateTime?           @default(now()) @db.DateTime(0)
-  order      order               @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_order_TO_order_detail_1")
+  id               String   @default(dbgenerated("(uuid())"))
+  order_id         String
+  product_id       String
+  order_prod_cnt   Int      @default(0)
+  order            order    @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_order_TO_order_detail_1")
 
   @@id([id, order_id])
   @@index([order_id], map: "FK_order_TO_order_detail_1")
