@@ -8,11 +8,16 @@ const ajv = typia.application<[memberCreateMustInput, memberCreateMustInput2, me
 class SchemasRoute extends BaseRoutes {
   public routes(): void {
     const router = this.router;
+
+    router.get('/', new SchemaController(ajv.components.schemas).print); // 전체 목록
+    router.get('/summary', new SchemaController(ajv.schemas).print); // 요약본
+
+    // 세부 목록
     for (const key in ajv.components.schemas) {
       if (Object.prototype.hasOwnProperty.call(ajv.components.schemas, key)) {
         const schemaInfo = ajv.components.schemas[key];
         console.log(key);
-        router.get(`/${key}`, new SchemaController(schemaInfo).implementShemaPrint);
+        router.get(`/${key}`, new SchemaController(schemaInfo).print);
       }
     }
   }

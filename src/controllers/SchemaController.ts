@@ -1,12 +1,15 @@
 import typia from 'typia';
 import { Request, Response } from 'express';
-class SchemaController {
-  protected schemaInfo: typia.IJsonComponents.IObject;
+type IObject = typia.IJsonComponents.IObject;
+type Ischema = IObject | Record<string, IObject> | typia.IJsonSchema[];
 
-  constructor(schemaInfo: typia.IJsonComponents.IObject) {
+class SchemaController {
+  protected schemaInfo: Ischema;
+
+  constructor(schemaInfo: Ischema) {
     this.schemaInfo = schemaInfo;
   }
-  implementShemaPrint = (req: Request, res: Response) => {
+  print = (req: Request, res: Response) => {
     res.send(this.schemaInfo);
   };
 }

@@ -29,7 +29,7 @@ class Bundle {
   }
 
   private routes(): void {
-    this.app.use('/components/schemas', SchemasRoute);
+    this.app.use('/schemas', SchemasRoute);
     this.app.use('/member', MemberRoutes);
   }
 
