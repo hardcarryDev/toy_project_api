@@ -16,7 +16,6 @@ class SchemasRoute extends BaseRoutes {
     for (const key in ajv.components.schemas) {
       if (Object.prototype.hasOwnProperty.call(ajv.components.schemas, key)) {
         const schemaInfo = ajv.components.schemas[key];
-        console.log(key);
         router.get(`/${key}`, new SchemaController(schemaInfo).print);
       }
     }
