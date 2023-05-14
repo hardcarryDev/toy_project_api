@@ -59,4 +59,6 @@ tsconfig.json에 "outDir" 항목에 적힌 곳에 컴파일 결과물이 옮겨�
 npm run dev
 ```
 
-### 5. 알아서 잘 사용할것.
+### 5. ERD(2023-05-14)
+![toy_project](https://github.com/hardcarryDev/toy_project_api/assets/21008572/d201f9c4-1695-4730-a82a-e72955bd2b68)
+
