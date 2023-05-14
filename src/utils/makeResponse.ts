@@ -26,8 +26,9 @@ function errorResponse(error: Error) {
   console.log('====== error.name ====== :: ', error.name);
 
   const errInfo: { [key: string]: string } = {
-    PrismaClientValidationError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
+    SyntaxError: '내부서버 에러입니다. 관리자에게 문의해주세요',
     TypeGuardError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
+    PrismaClientValidationError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
   };
 
   const msg: string = errInfo[error.name];
