@@ -30,3 +30,20 @@ type order_detailCreateWithoutOrderInput = {
   product_id: string;
   order_prod_cnt?: number;
 };
+
+interface orderWhereClientInput {
+  AND?: Enumerable<orderWhereClientInput>;
+  OR?: Enumerable<orderWhereClientInput>;
+  NOT?: Enumerable<orderWhereClientInput>;
+  id?: string;
+  member_id?: string;
+  req_name?: string | null;
+  res_address?: string | null;
+  res_phone?: string | null;
+  res_requirement?: string | null;
+  total_price?: number | null;
+  order_dt?: Date | string | null;
+  order_cancel_dt?: Date | string | null;
+}
+
+type Enumerable<T> = T | Array<T>;

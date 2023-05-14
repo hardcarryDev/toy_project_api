@@ -21,6 +21,7 @@ class OrderService extends BaseService {
     // 타입 체킹시 에러남 :  Maximum call stack size exceeded
     // node_modules\typia\lib\factories\internal\metadata\iterate_metadata_object.js:32:111
     // typia.assert<Prisma.orderWhereInput>(this.body);
+    typia.assertEquals<orderWhereClientInput>(this.body);
     const result = await prisma.order.findMany({
       where: <Prisma.orderWhereInput>this.body,
     });
