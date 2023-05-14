@@ -1,4 +1,8 @@
 import { TypeGuardError } from 'typia';
+import { Prisma } from '@prisma/client';
+import dotenv from 'dotenv';
+dotenv.config();
+const env = process.env.NODE_ENV || 'dev';
 
 function successResponse(data: unknown[] | unknown) {
   return {
@@ -24,7 +28,6 @@ function errorResponse(error: Error) {
   const errInfo: { [key: string]: string } = {
     PrismaClientValidationError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
     TypeGuardError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
-    SequelizeDatabaseError: '내부 서버 에러입니다. 관리자에게 문의해주세요',
   };
 
   const msg: string = errInfo[error.name];
@@ -33,22 +36,22 @@ function errorResponse(error: Error) {
     code: 500,
     result: false,
     message: msg,
-    error: error.message,
+    error: env == 'dev' ? error.message : '',
   };
 }
 
 function makeExactError(error: unknown): unknown {
   if (error instanceof TypeGuardError) {
     error.name = 'TypeGuardError';
-    return error;
+  }
+  if (error instanceof Prisma.PrismaClientValidationError) {
+    error.name = 'PrismaClientValidationError';
   }
   if (error instanceof SyntaxError) {
     error.name = 'SyntaxError';
-    return error;
   }
-  if (error instanceof Error) {
-    return error;
-  }
+
+  return error;
 }
 
 export { successResponse, errorResponse, makeExactError };
