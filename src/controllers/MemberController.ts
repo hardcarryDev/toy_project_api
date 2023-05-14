@@ -27,6 +27,19 @@ class MemberController {
       }
     }
   };
+
+  updateMember = async (req: Request, res: Response) => {
+    const svc: MemberService = new MemberService(req);
+    try {
+      const result = await svc.updateMember();
+      return result;
+    } catch (error) {
+      const exactError: unknown = makeExactError(error);
+      if (exactError instanceof Error) {
+        res.send(errorResponse(exactError));
+      }
+    }
+  };
 }
 
 export default new MemberController();

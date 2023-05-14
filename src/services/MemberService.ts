@@ -24,6 +24,14 @@ class MemberService extends BaseService {
     });
     return result;
   }
+
+  async updateMember(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      reject(new Error('Method not implemented.'));
+    });
+
+    // return null;
+  }
 }
 
 export default MemberService;

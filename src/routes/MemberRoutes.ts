@@ -5,6 +5,7 @@ class MemberRoutes extends BaseRoutes {
   public routes(): void {
     this.router.post('/create', MemberController.createMember);
     this.router.post('/list', MemberController.memberList);
+    this.router.post('/update', MemberController.updateMember);
   }
 }
 
