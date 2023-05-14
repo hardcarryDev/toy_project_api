@@ -41,14 +41,16 @@ function errorResponse(error: Error) {
 }
 
 function makeExactError(error: unknown): unknown {
-  if (error instanceof TypeGuardError) {
-    error.name = 'TypeGuardError';
+  if (error instanceof SyntaxError) {
+    error.name = 'SyntaxError';
   }
+
   if (error instanceof Prisma.PrismaClientValidationError) {
     error.name = 'PrismaClientValidationError';
   }
-  if (error instanceof SyntaxError) {
-    error.name = 'SyntaxError';
+
+  if (error instanceof TypeGuardError) {
+    error.name = 'TypeGuardError';
   }
 
   return error;
