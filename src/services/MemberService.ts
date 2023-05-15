@@ -3,7 +3,6 @@ import BaseService from './BaseService';
 import { Prisma, PrismaClient, member } from '@prisma/client';
 const prisma = new PrismaClient();
 import typia from 'typia';
-
 class MemberService extends BaseService {
   constructor(req: Request) {
     super(req);
@@ -25,12 +24,17 @@ class MemberService extends BaseService {
     return result;
   }
 
-  async updateMember(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
-      reject(new Error('Method not implemented.'));
+  async updateMember() {
+    const member = await prisma.member.update({
+      where: {
+        id: '9a19a728-f166-11ed-9720-4ccc6ae0f10b',
+      },
+      data: {
+        name: 'test',
+        update_dt: this.nowDt(),
+      },
     });
-
-    // return null;
+    return member;
   }
 }
 

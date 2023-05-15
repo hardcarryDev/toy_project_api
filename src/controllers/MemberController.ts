@@ -32,7 +32,7 @@ class MemberController {
     const svc: MemberService = new MemberService(req);
     try {
       const result = await svc.updateMember();
-      return result;
+      res.send(successResponse(result));
     } catch (error) {
       const exactError: unknown = makeExactError(error);
       if (exactError instanceof Error) {

@@ -20,7 +20,7 @@ model member {
   phone     String?              @db.VarChar(50)
   grade     String?              @db.VarChar(20)
   grade_id  String?
-  create_dt DateTime             @default(now()) @db.DateTime(0)
+  create_dt DateTime?            @default(now()) @db.DateTime(0)
   update_dt DateTime?            @db.DateTime(0)
   exit_dt   DateTime?            @db.DateTime(0)
 
