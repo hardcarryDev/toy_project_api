@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import MemberService from '../services/MemberService';
-import { successResponse, errorResponse, makeExactError } from '../utils/makeResponse';
+import { successResponse, errorResponse, makeExactError } from '../utils/MakeResponse';
 class MemberController {
   createMember = async (req: Request, res: Response) => {
     const svc: MemberService = new MemberService(req);

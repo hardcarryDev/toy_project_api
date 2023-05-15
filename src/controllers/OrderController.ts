@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import OrderService from '../services/OrderService';
-import { successResponse, errorResponse, makeExactError } from '../utils/makeResponse';
+import { successResponse, errorResponse, makeExactError } from '../utils/MakeResponse';
 class OrderController {
   createOrder = async (req: Request, res: Response) => {
     const svc: OrderService = new OrderService(req);
