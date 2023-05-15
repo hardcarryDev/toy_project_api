@@ -31,6 +31,7 @@ function errorResponse(error: Error) {
     SyntaxError: defaultErrorMessage,
     TypeGuardError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
     PrismaClientValidationError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
+    RecordNotFound: '검색된 레코드가 없습니다.',
   };
 
   const msg: string = errInfo[error.name];
