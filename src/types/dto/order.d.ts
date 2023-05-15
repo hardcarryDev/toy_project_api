@@ -1,4 +1,4 @@
-interface orderCreateMustInput {
+type orderCreateMustInput = {
   id?: string;
   member_id: string;
   req_name?: string | null;
@@ -23,7 +23,7 @@ interface orderCreateMustInput {
   // 3. 타입을 아래에 작성
   // ==> 타입 이름이 표시되고, refs로 연결 가능함.
   order_detail?: order_detailCreateWithoutOrderInput[];
-}
+};
 
 type order_detailCreateWithoutOrderInput = {
   id?: string;
@@ -31,7 +31,7 @@ type order_detailCreateWithoutOrderInput = {
   order_prod_cnt?: number;
 };
 
-interface orderWhereClientInput {
+type orderWhereClientInput = {
   AND?: Enumerable<orderWhereClientInput>;
   OR?: Enumerable<orderWhereClientInput>;
   NOT?: Enumerable<orderWhereClientInput>;
@@ -44,6 +44,6 @@ interface orderWhereClientInput {
   total_price?: number | null;
   order_dt?: Date | string | null;
   order_cancel_dt?: Date | string | null;
-}
+};
 
 type Enumerable<T> = T | Array<T>;

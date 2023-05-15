@@ -1,8 +1,10 @@
+import * as _ from 'lodash';
 import { Request } from 'express';
 import BaseService from './BaseService';
 import { Prisma, PrismaClient, member } from '@prisma/client';
 const prisma = new PrismaClient();
 import typia from 'typia';
+
 class MemberService extends BaseService {
   constructor(req: Request) {
     super(req);
@@ -25,12 +27,17 @@ class MemberService extends BaseService {
   }
 
   async updateMember() {
+    typia.assertEquals<memberUpdateMustInput>(this.body);
+    const { id } = <memberUpdateMustInput>this.body;
+    const data = _.cloneDeep(<Prisma.memberUpdateInput>this.body);
+    delete data.id;
+
     const member = await prisma.member.update({
       where: {
-        id: '9a19a728-f166-11ed-9720-4ccc6ae0f10b',
+        id: id,
       },
       data: {
-        name: 'test',
+        ...data,
         update_dt: this.nowDt(),
       },
     });
