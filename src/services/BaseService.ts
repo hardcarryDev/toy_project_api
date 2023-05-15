@@ -1,21 +1,25 @@
 import { Request } from 'express';
-import dayjs from 'dayjs';
-import timezone from 'dayjs/plugin/timezone';
-import utc from 'dayjs/plugin/utc';
-dayjs.extend(utc);
-dayjs.extend(timezone);
-dayjs.tz.setDefault('Asia/Seoul');
+import dotenv from 'dotenv';
+dotenv.config();
+
+/**
+ * 제공되는 프로퍼티 목록
+ *
+ * @prop body: Request['body'];
+ * @prop params: Request['params'];
+ * @prop env: string;
+ * @prop nowDt: () => Date;
+ */
 export default class BaseService {
-  body: Request['body'];
-  params: Request['params'];
-  // dayjs: () => dayjs.Dayjs;
-  nowDt: () => Date;
+  protected body: Request['body'];
+  protected params: Request['params'];
+  protected env: string;
+  protected nowDt: () => Date;
 
   constructor(req: Request) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    this.body = req.body;
+    this.body = <unknown>req.body;
     this.params = req.params;
-    // this.dayjs = () => dayjs().tz('Asia/Seoul');
+    this.env = process.env.NODE_ENV || 'dev';
 
     // node.js 에서 new Date()를 기본으로 GMT 타임존으로 만들어버리는 이슈가 있다.
     // 데이터베이스 타임존도 맞추면 둘다 맞긴한데 한국이니 한국에 맞게 맞춰야 되지 않겠나
