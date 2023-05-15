@@ -17,7 +17,7 @@ class Bundle {
     this.app = express();
     this.host = process.env.HOST || 'http://localhost';
     this.port = process.env.PORT || '3000';
-    this.db = process.env.DB_HOST || '';
+    this.db = process.env.PRISMA_DB_URL || '';
     this.environment = process.env.NODE_ENV || 'dev';
     this.plugins();
     this.routes();
@@ -67,5 +67,5 @@ const app = bundle.app;
 app.listen(bundle.port, () => {
   console.log(`* APP RUNNING : ${bundle.host}:${bundle.port}`);
   console.log(`* ENVIRONMENT : ${bundle.environment}`);
-  console.log(`* DB HOST     : ${bundle.db}`);
+  console.log(`* DB INFO     : ${bundle.db}`);
 });
