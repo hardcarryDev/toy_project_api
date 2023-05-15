@@ -40,6 +40,18 @@ class MemberController {
       }
     }
   };
+  deleteMember = async (req: Request, res: Response) => {
+    const svc: MemberService = new MemberService(req);
+    try {
+      const result = await svc.deleteMember();
+      res.send(successResponse(result));
+    } catch (error) {
+      const exactError: unknown = makeExactError(error);
+      if (exactError instanceof Error) {
+        res.send(errorResponse(exactError));
+      }
+    }
+  };
 }
 
 export default new MemberController();

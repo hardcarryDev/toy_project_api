@@ -30,3 +30,7 @@ type memberUpdateMustInput = {
   update_dt?: Date | string | null;
   exit_dt?: Date | string | null;
 };
+
+type memberDeleteInput = {
+  id: string;
+};
