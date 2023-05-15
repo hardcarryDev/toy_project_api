@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import _ from 'lodash';
 import { Request } from 'express';
 import BaseService from './BaseService';
 import { Prisma, PrismaClient, member } from '@prisma/client';
