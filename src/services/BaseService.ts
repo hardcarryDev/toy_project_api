@@ -1,7 +1,13 @@
 import { Request } from 'express';
+import typia from 'typia';
+import { Prisma, PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient({
+  log: ['query', 'info', 'warn', 'error'],
+  errorFormat: 'pretty',
+});
+
 import dotenv from 'dotenv';
 dotenv.config();
-import typia from 'typia';
 
 /**
  * 제공되는 프로퍼티 목록
@@ -36,4 +42,4 @@ class BaseService {
   }
 }
 
-export { BaseService, typia };
+export { BaseService, typia, Prisma, prisma };

@@ -1,7 +1,5 @@
 import { Request } from 'express';
-import { BaseService, typia } from './BaseService';
-import { Prisma, PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient({ log: ['query', 'info'] });
+import { BaseService, typia, Prisma, prisma } from './BaseService';
 
 class OrderService extends BaseService {
   constructor(req: Request) {

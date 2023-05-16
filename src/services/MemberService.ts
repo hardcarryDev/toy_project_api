@@ -1,11 +1,7 @@
 import _ from 'lodash';
 import { Request } from 'express';
-import { BaseService, typia } from './BaseService';
-import { Prisma, PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient({
-  log: ['query', 'info', 'warn', 'error'],
-  errorFormat: 'pretty',
-});
+import { BaseService, typia, Prisma, prisma } from './BaseService';
+
 class MemberService extends BaseService {
   constructor(req: Request) {
     super(req);
