@@ -2,11 +2,12 @@ import _ from 'lodash';
 import { Request } from 'express';
 import BaseService from './BaseService';
 import { Prisma, PrismaClient } from '@prisma/client';
+
 const prisma = new PrismaClient({
   log: ['query', 'info', 'warn', 'error'],
-  errorFormat: 'minimal',
+  errorFormat: 'pretty',
 });
-import { AdditionalPrismaError } from '../error/AdditionalPrismaError';
+import { AdditionalPrismaError, prismaCommonErrMsg } from '../error/AdditionalPrismaError';
 import typia from 'typia';
 
 class MemberService extends BaseService {
@@ -36,20 +37,21 @@ class MemberService extends BaseService {
     const data = _.cloneDeep(<Prisma.memberUpdateInput>this.body);
     delete data.id;
 
-    try {
-      const member = await prisma.member.update({
-        where: {
-          id: id,
-        },
-        data: {
-          ...data,
-          update_dt: this.nowDt(),
-        },
-      });
-      return member;
-    } catch (error) {
-      throw new AdditionalPrismaError('RecordNotFound', (<Error>error).message);
-    }
+    const member = await prisma.member.update({
+      where: {
+        id: id,
+      },
+      data: {
+        ...data,
+        update_dt: this.nowDt(),
+      },
+    });
+    return member;
+    // try {
+
+    // } catch (error) {
+    //   throw new AdditionalPrismaError('RecordNotFound', (<Error>error).message);
+    // }
   }
 
   async deleteMember() {

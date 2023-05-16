@@ -1,5 +1,6 @@
 import typia from 'typia';
 import { Prisma } from '@prisma/client';
+import { AdditionalPrismaError, prismaCommonErrMsg } from '../error/AdditionalPrismaError';
 import dotenv from 'dotenv';
 dotenv.config();
 const env = process.env.NODE_ENV || 'dev';
@@ -22,7 +23,7 @@ function successResponse(data: unknown[] | unknown) {
  * @param error
  * @returns ERROR JSON
  */
-function errorResponse(error: Error) {
+function errorResponse(error: AdditionalPrismaError) {
   console.log('====== error.name ====== :: ', error.name);
   const defaultErrorMessage = '내부서버 에러입니다. 관리자에게 문의해주세요';
 
@@ -31,6 +32,7 @@ function errorResponse(error: Error) {
     SyntaxError: defaultErrorMessage,
     TypeGuardError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
     PrismaClientValidationError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
+    PrismaClientKnownRequestError: '잘못된 요청입니다. 요청 파라미터를 확인해주세요.',
     RecordNotFound: '검색된 레코드가 없습니다.',
   };
 
@@ -41,6 +43,8 @@ function errorResponse(error: Error) {
     result: false,
     message: msg,
     error: env == 'dev' ? error.message : '',
+    prismaErrCode: error.prismaErrCode,
+    prismaErrMsg: error.prismaErrMsg,
   };
 }
 
@@ -51,6 +55,15 @@ function makeExactError(error: unknown): unknown {
 
   if (error instanceof Prisma.PrismaClientValidationError) {
     error.name = 'PrismaClientValidationError';
+    // error.prismaErrCode = error.code;
+  }
+
+  if (error instanceof Prisma.PrismaClientKnownRequestError) {
+    error.name = 'PrismaClientValidationError';
+    const pError = <AdditionalPrismaError>error;
+    pError.prismaErrCode = error.code;
+    pError.prismaErrMsg = prismaCommonErrMsg[error.code];
+    error = pError;
   }
 
   if (error instanceof typia.TypeGuardError) {

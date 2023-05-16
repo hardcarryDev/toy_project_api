@@ -1,0 +1,3 @@
+type BatchPayload = {
+  count: number;
+};
