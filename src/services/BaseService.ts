@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import _ from 'lodash';
 import typia from 'typia';
 import { Prisma, PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient({
@@ -42,4 +43,4 @@ class BaseService {
   }
 }
 
-export { BaseService, typia, Prisma, prisma };
+export { BaseService, typia, Prisma, prisma, _ };
