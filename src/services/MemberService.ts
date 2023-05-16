@@ -1,6 +1,5 @@
-import _ from 'lodash';
 import { Request } from 'express';
-import { BaseService, typia, Prisma, prisma } from './BaseService';
+import { BaseService, typia, Prisma, prisma, _ } from './BaseService';
 
 class MemberService extends BaseService {
   constructor(req: Request) {

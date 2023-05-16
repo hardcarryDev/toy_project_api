@@ -36,6 +36,7 @@ model order {
   res_requirement String?             @db.VarChar(100)
   total_price     Int?
   order_dt        DateTime?           @default(now()) @db.DateTime(0)
+  update_dt       DateTime?           @db.DateTime(0)
   order_cancel_dt DateTime?           @db.DateTime(0)
   order_detail    order_detail[]
 
