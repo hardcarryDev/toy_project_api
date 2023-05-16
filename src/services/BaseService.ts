@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
+import typia from 'typia';
 
 /**
  * 제공되는 프로퍼티 목록
@@ -10,7 +11,7 @@ dotenv.config();
  * @prop env: string;
  * @prop nowDt: () => Date;
  */
-export default class BaseService {
+class BaseService {
   protected body: Request['body'];
   protected params: Request['params'];
   protected env: string;
@@ -34,3 +35,5 @@ export default class BaseService {
     };
   }
 }
+
+export { BaseService, typia };
