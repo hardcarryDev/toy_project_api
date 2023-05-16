@@ -45,5 +45,3 @@ type orderWhereClientInput = {
   order_dt?: Date | string | null;
   order_cancel_dt?: Date | string | null;
 };
-
-type Enumerable<T> = T | Array<T>;

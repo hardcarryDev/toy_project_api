@@ -1,11 +1,9 @@
-type member_gender = 'M' | 'W';
-
 type memberCreateMustInput = {
   id?: string;
   user_id?: string;
   password?: string;
   name: string | null;
-  gender?: member_gender | null;
+  gender?: Gender | null;
   age?: number | null;
   email?: string | null;
   phone?: string | null;
@@ -21,7 +19,7 @@ type memberUpdateMustInput = {
   user_id?: string;
   password?: string;
   name?: string | null;
-  gender?: member_gender | null;
+  gender?: Gender | null;
   age?: number | null;
   email?: string | null;
   phone?: string | null;
@@ -31,6 +29,4 @@ type memberUpdateMustInput = {
   exit_dt?: Date | string | null;
 };
 
-type memberDeleteInput = {
-  id: string;
-};
+type memberDeleteInput = ID;
