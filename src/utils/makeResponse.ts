@@ -43,8 +43,8 @@ function errorResponse(error: AdditionalPrismaError) {
     result: false,
     message: msg,
     error: env == 'dev' ? error.message : '',
-    prismaErrCode: error.prismaErrCode,
-    prismaErrMsg: error.prismaErrMsg,
+    prismaErrCode: env == 'dev' ? error.prismaErrCode : '',
+    prismaErrMsg: env == 'dev' ? error.prismaErrMsg : '',
   };
 }
 
@@ -55,7 +55,6 @@ function makeExactError(error: unknown): unknown {
 
   if (error instanceof Prisma.PrismaClientValidationError) {
     error.name = 'PrismaClientValidationError';
-    // error.prismaErrCode = error.code;
   }
 
   if (error instanceof Prisma.PrismaClientKnownRequestError) {

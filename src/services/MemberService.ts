@@ -7,7 +7,6 @@ const prisma = new PrismaClient({
   log: ['query', 'info', 'warn', 'error'],
   errorFormat: 'pretty',
 });
-import { AdditionalPrismaError, prismaCommonErrMsg } from '../error/AdditionalPrismaError';
 import typia from 'typia';
 
 class MemberService extends BaseService {
@@ -47,11 +46,6 @@ class MemberService extends BaseService {
       },
     });
     return member;
-    // try {
-
-    // } catch (error) {
-    //   throw new AdditionalPrismaError('RecordNotFound', (<Error>error).message);
-    // }
   }
 
   async deleteMember() {
