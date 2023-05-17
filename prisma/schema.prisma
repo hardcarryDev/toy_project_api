@@ -8,23 +8,42 @@ datasource db {
 }
 
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model member {
-  id        String  @id @default(dbgenerated("(uuid())"))
-  user_id   String               @db.VarChar(50)
-  password  String               @db.VarChar(50)
-  name      String?              @db.VarChar(100)
-  gender    member_gender?
-  age       Int?                 @db.TinyInt
-  email     String?              @db.VarChar(50)
-  phone     String?              @db.VarChar(50)
-  grade     String?              @db.VarChar(20)
-  grade_id  String?
-  create_dt DateTime?            @default(now()) @db.DateTime(0)
-  update_dt DateTime?            @db.DateTime(0)
-  exit_dt   DateTime?            @db.DateTime(0)
-  order     order[]
+model cart {
+  id             String  @id @default(dbgenerated("(uuid())"))
+  user_id        String?
+  product_id     String?
+  product_amount Int?                 @default(0)
+  product_price  Int?                 @default(0)
+  status         String?              @db.VarChar(10)
+  create_dt      DateTime?            @default(now()) @db.DateTime(0)
+  update_dt      DateTime?            @db.DateTime(0)
+  delete_dt      DateTime?            @db.DateTime(0)
+  member         member?              @relation(fields: [user_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK_member_TO_cart_1")
+  product        product?             @relation(fields: [product_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK_product_TO_cart_1")
 
-  
+  @@index([user_id], map: "FK_member_TO_cart_1")
+  @@index([product_id], map: "FK_product_TO_cart_1")
+}
+
+/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+model member {
+  id         String  @id @default(dbgenerated("(uuid())"))
+  user_id    String               @db.VarChar(50)
+  password   String               @db.VarChar(50)
+  name       String?              @db.VarChar(100)
+  gender     member_gender?
+  age        Int?                 @db.TinyInt
+  email      String?              @db.VarChar(50)
+  phone      String?              @db.VarChar(50)
+  grade      String?              @default("NORMAL") @db.VarChar(20)
+  grade_id   String?
+  create_dt  DateTime             @default(now()) @db.DateTime(0)
+  update_dt  DateTime?            @db.DateTime(0)
+  exit_dt    DateTime?            @db.DateTime(0)
+  cart       cart[]
+  order      order[]
+  product_io product_io[]
+
 }
 
 model order {
@@ -35,14 +54,27 @@ model order {
   res_phone       String?             @db.VarChar(20)
   res_requirement String?             @db.VarChar(100)
   total_price     Int?
-  order_dt        DateTime?           @default(now()) @db.DateTime(0)
+  order_dt        DateTime            @default(now()) @db.DateTime(0)
   update_dt       DateTime?           @db.DateTime(0)
   order_cancel_dt DateTime?           @db.DateTime(0)
-  member          member              @relation(fields: [member_id], references: [id], onUpdate: Restrict, map: "order_FK")
+  member          member              @relation(fields: [member_id], references: [id], onUpdate: Restrict, map: "FK_member_TO_order_1")
   order_detail    order_detail[]
+  product_io      product_io[]
 
-  @@index([member_id], map: "order_FK")
-  
+  @@index([member_id], map: "FK_member_TO_order_1")
+}
+
+model order_detail {
+  id             String @default(dbgenerated("(uuid())"))
+  order_id       String
+  product_id     String
+  order_prod_cnt Int                 @default(0)
+  order          order               @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_order_TO_order_detail_1")
+  product        product             @relation(fields: [product_id], references: [id], onUpdate: Restrict, map: "FK_product_TO_order_detail_1")
+
+  @@id([id, order_id])
+  @@index([order_id], map: "FK_order_TO_order_detail_1")
+  @@index([product_id], map: "FK_product_TO_order_detail_1")
 }
 
 model product {
@@ -55,11 +87,12 @@ model product {
   create_dt      DateTime?           @default(now()) @db.DateTime(0)
   update_dt      DateTime?           @db.DateTime(0)
   delete_dt      DateTime?           @db.DateTime(0)
+  cart           cart[]
+  order_detail   order_detail[]
   product_io     product_io[]
   product_review product_review[]
   stock          stock[]
 
-  
 }
 
 model product_io {
@@ -69,38 +102,14 @@ model product_io {
   member_id  String?
   status     String?              @db.VarChar(10)
   amount     Int                  @default(0)
+  member     member?              @relation(fields: [member_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK_member_TO_product_io_1")
+  order      order?               @relation(fields: [order_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "FK_order_TO_product_io_1")
   product    product              @relation(fields: [prodcut_id], references: [id], onUpdate: Restrict, map: "FK_product_TO_product_io_1")
 
   @@id([id, prodcut_id])
+  @@index([member_id], map: "FK_member_TO_product_io_1")
+  @@index([order_id], map: "FK_order_TO_product_io_1")
   @@index([prodcut_id], map: "FK_product_TO_product_io_1")
-  
-}
-
-/// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-model cart {
-  id             String  @id @default(dbgenerated("(uuid())"))
-  user_id        String?
-  product_id     String
-  product_amount Int?                 @default(0)
-  product_price  Int?                 @default(0)
-  status         String?              @db.VarChar(10)
-  create_dt      DateTime?            @default(now()) @db.DateTime(0)
-  update_dt      DateTime?            @db.DateTime(0)
-  delete_dt      DateTime?            @db.DateTime(0)
-
-  
-}
-
-model order_detail {
-  id             String @default(dbgenerated("(uuid())"))
-  order_id       String
-  product_id     String
-  order_prod_cnt Int                 @default(0)
-  order          order               @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_order_TO_order_detail_1")
-
-  @@id([id, order_id])
-  @@index([order_id], map: "FK_order_TO_order_detail_1")
-  
 }
 
 model product_review {
@@ -114,7 +123,6 @@ model product_review {
 
   @@id([id, product_id])
   @@index([product_id], map: "FK_product_TO_product_review_1")
-  
 }
 
 model stock {
@@ -125,7 +133,6 @@ model stock {
 
   @@id([id, product_id])
   @@index([product_id], map: "FK_product_TO_stock_1")
-  
 }
 
 enum member_gender {
