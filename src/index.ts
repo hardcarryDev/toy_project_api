@@ -3,6 +3,7 @@ import SchemasRoute from './routes/SchemasRoute';
 import MemberRoutes from './routes/MemberRoutes';
 import OrderRoutes from './routes/OrderRoutes';
 import ProductRoutes from './routes/ProductRoutes';
+import CartRoutes from './routes/CartRoutes';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -35,6 +36,7 @@ class Bundle {
     this.app.use('/member', MemberRoutes);
     this.app.use('/order', OrderRoutes);
     this.app.use('/product', ProductRoutes);
+    this.app.use('/cart', CartRoutes);
   }
 
   private handlers(): void {
