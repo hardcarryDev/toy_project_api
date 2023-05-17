@@ -4,11 +4,10 @@
   "description": "express typescript backend server using prisma & mariadb",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon ./build/index.js --mode development",
-    "start": "npm run dev",
     "build": "rm -rf ./build && tsc -w",
-    "prepare": "ts-patch install"
+    "pull": "npx prisma db pull",
+    "gen": "npx prisma generate"
   },
   "keywords": [],
   "author": "cordelia(JINWOO)",
