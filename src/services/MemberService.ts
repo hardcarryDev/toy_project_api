@@ -15,7 +15,7 @@ class MemberService extends BaseService {
   }
 
   async memberList() {
-    typia.assertEquals<Prisma.memberWhereInput>(this.body);
+    typia.assertEquals<memberWhereClientInput>(this.body);
     const result = await prisma.member.findMany({
       where: <Prisma.memberWhereInput>this.body,
     });

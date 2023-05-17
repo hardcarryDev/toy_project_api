@@ -1,5 +1,4 @@
 type memberCreateMustInput = {
-  id?: string;
   user_id?: string;
   password?: string;
   name: string | null;
@@ -12,6 +11,22 @@ type memberCreateMustInput = {
   create_dt?: Date;
   update_dt?: Date | null;
   exit_dt?: Date | null;
+};
+
+type memberWhereClientInput = {
+  id?: string;
+  user_id?: string;
+  password?: string;
+  name?: string | null;
+  gender?: Gender | null;
+  age?: number | null;
+  email?: string | null;
+  phone?: string | null;
+  grade?: string | null;
+  grade_id?: string | null;
+  create_dt?: Date | string | null;
+  update_dt?: Date | string | null;
+  exit_dt?: Date | string | null;
 };
 
 type memberUpdateMustInput = {
