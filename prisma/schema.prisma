@@ -7,9 +7,7 @@ datasource db {
   url      = env("PRISMA_DB_URL")
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model member {
   id        String  @id @default(dbgenerated("(uuid())"))
   user_id   String               @db.VarChar(50)
@@ -29,8 +27,6 @@ model member {
   
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model order {
   id              String @id @default(dbgenerated("(uuid())"))
   member_id       String
@@ -49,8 +45,6 @@ model order {
   
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model product {
   id             String @id @default(dbgenerated("(uuid())"))
   name           String?             @db.VarChar(50)
@@ -68,8 +62,6 @@ model product {
   
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model product_io {
   id         String  @default(dbgenerated("(uuid())"))
   prodcut_id String
@@ -84,19 +76,20 @@ model product_io {
   
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model cart {
-  id         String  @id @default(dbgenerated("(uuid())"))
-  user_id    String?
-  product_id String
+  id             String  @id @default(dbgenerated("(uuid())"))
+  user_id        String?
+  product_id     String
+  product_amount Int?                 @default(0)
+  product_price  Int?                 @default(0)
+  status         String?              @db.VarChar(10)
+  create_dt      DateTime?            @db.DateTime(0)
+  update_dt      DateTime?            @db.DateTime(0)
 
   
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model order_detail {
   id             String @default(dbgenerated("(uuid())"))
   order_id       String
@@ -109,8 +102,6 @@ model order_detail {
   
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model product_review {
   id           String @default(dbgenerated("(uuid())"))
   product_id   String
@@ -125,8 +116,6 @@ model product_review {
   
 }
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model stock {
   id           String @default(dbgenerated("(uuid())"))
   product_id   String
