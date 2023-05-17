@@ -60,4 +60,3 @@ type orderUpdateMustInput = {
 };
 
 type orderDeleteInput = ID;
-s;
