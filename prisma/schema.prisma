@@ -84,8 +84,9 @@ model cart {
   product_amount Int?                 @default(0)
   product_price  Int?                 @default(0)
   status         String?              @db.VarChar(10)
-  create_dt      DateTime?            @db.DateTime(0)
+  create_dt      DateTime?            @default(now()) @db.DateTime(0)
   update_dt      DateTime?            @db.DateTime(0)
+  delete_dt      DateTime?            @db.DateTime(0)
 
   
 }
