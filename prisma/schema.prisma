@@ -9,6 +9,7 @@ datasource db {
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model member {
   id        String  @id @default(dbgenerated("(uuid())"))
   user_id   String               @db.VarChar(50)
@@ -23,9 +24,12 @@ model member {
   create_dt DateTime?            @default(now()) @db.DateTime(0)
   update_dt DateTime?            @db.DateTime(0)
   exit_dt   DateTime?            @db.DateTime(0)
+  order     order[]
 
+  
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model order {
   id              String @id @default(dbgenerated("(uuid())"))
@@ -38,10 +42,14 @@ model order {
   order_dt        DateTime?           @default(now()) @db.DateTime(0)
   update_dt       DateTime?           @db.DateTime(0)
   order_cancel_dt DateTime?           @db.DateTime(0)
+  member          member              @relation(fields: [member_id], references: [id], onUpdate: Restrict, map: "order_FK")
   order_detail    order_detail[]
 
+  @@index([member_id], map: "order_FK")
+  
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model product {
   id             String @id @default(dbgenerated("(uuid())"))
@@ -50,47 +58,58 @@ model product {
   category       String?             @db.VarChar(20)
   description    String?             @db.VarChar(50)
   company        String?             @db.VarChar(20)
+  create_dt      DateTime?           @default(now()) @db.DateTime(0)
+  update_dt      DateTime?           @db.DateTime(0)
+  delete_dt      DateTime?           @db.DateTime(0)
   product_io     product_io[]
   product_review product_review[]
   stock          stock[]
 
+  
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model product_io {
-  id         String @default(dbgenerated("(uuid())"))
+  id         String  @default(dbgenerated("(uuid())"))
   prodcut_id String
-  order_id   String
-  member_id  String
-  status     String?             @db.VarChar(10)
-  amount     Int                 @default(0)
-  product    product             @relation(fields: [prodcut_id], references: [id], onUpdate: Restrict, map: "FK_product_TO_product_io_1")
+  order_id   String?
+  member_id  String?
+  status     String?              @db.VarChar(10)
+  amount     Int                  @default(0)
+  product    product              @relation(fields: [prodcut_id], references: [id], onUpdate: Restrict, map: "FK_product_TO_product_io_1")
 
   @@id([id, prodcut_id])
   @@index([prodcut_id], map: "FK_product_TO_product_io_1")
+  
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// This model or at least one of its fields has comments in the database, and requires an additional setup for migrations: Read more: https://pris.ly/d/database-comments
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model cart {
   id         String  @id @default(dbgenerated("(uuid())"))
   user_id    String?
   product_id String
 
+  
 }
 
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model order_detail {
-  id               String   @default(dbgenerated("(uuid())"))
-  order_id         String
-  product_id       String
-  order_prod_cnt   Int      @default(0)
-  order            order    @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_order_TO_order_detail_1")
+  id             String @default(dbgenerated("(uuid())"))
+  order_id       String
+  product_id     String
+  order_prod_cnt Int                 @default(0)
+  order          order               @relation(fields: [order_id], references: [id], onUpdate: Restrict, map: "FK_order_TO_order_detail_1")
 
   @@id([id, order_id])
   @@index([order_id], map: "FK_order_TO_order_detail_1")
+  
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model product_review {
   id           String @default(dbgenerated("(uuid())"))
@@ -103,8 +122,10 @@ model product_review {
 
   @@id([id, product_id])
   @@index([product_id], map: "FK_product_TO_product_review_1")
+  
 }
 
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 /// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by the Prisma Client.
 model stock {
   id           String @default(dbgenerated("(uuid())"))
@@ -114,6 +135,7 @@ model stock {
 
   @@id([id, product_id])
   @@index([product_id], map: "FK_product_TO_stock_1")
+  
 }
 
 enum member_gender {
