@@ -1,7 +1,7 @@
 type cartCreateMustInput = {
   user_id?: string | null;
   product_id: string;
-  product_amount?: number | null;
+  product_name?: string | null;
   product_price?: number | null;
   status?: string | null;
 };
@@ -13,7 +13,7 @@ type cartWhereClientInput = {
   id?: string;
   user_id?: string | null;
   product_id?: string;
-  product_amount?: number | null;
+  product_name?: string | null;
   product_price?: number | null;
   status?: string | null;
   create_dt?: Date | string | null;
@@ -25,7 +25,7 @@ type cartUpdateMustInput = {
   id: string;
   user_id?: string | null;
   product_id?: string;
-  product_amount?: number | null;
+  product_name?: string | null;
   product_price?: number | null;
   status?: string | null;
   create_dt?: Date | string | null;

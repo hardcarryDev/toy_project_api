@@ -12,7 +12,7 @@ model cart {
   id             String  @id @default(dbgenerated("(uuid())"))
   user_id        String?
   product_id     String?
-  product_amount Int?                 @default(0)
+  product_name   String?              @db.VarChar(50)   
   product_price  Int?                 @default(0)
   status         String?              @db.VarChar(10)
   create_dt      DateTime?            @default(now()) @db.DateTime(0)
